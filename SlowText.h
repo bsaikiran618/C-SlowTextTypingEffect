@@ -1,5 +1,8 @@
 //This is cross-platform ..(cough) only windows and linux.. (cough)..
 
+#ifndef SLOWTEXT
+	#define SLOWTEXT
+
 #if _WIN32
 	#include <windows.h>
 #elif __linux__
@@ -64,3 +67,4 @@ void slowPrint(char *message, double writeInterval, int backSpace, double backSp
 		}
 	}
 }
+#endif
