@@ -25,8 +25,15 @@ void waitTime(double t)
 	#endif
 	//And no one cares about apple, although it should work without a problem cuz oonix.
 }
+
 void slowPrint(char *message, double writeInterval, int backSpace, double backSpaceInterval)
 {
+	/*
+		double writeInterval is the sleep time used while printing characters. Larger this number, slower the printing
+		int backSpace should be set to 1 if you want to use the backspace effect.
+		double backSpaceInterval is the sleep time used while removing characters(works if int backSpace is set to 1). Larger this number, slower is the removing
+	*/
+
 	int len = strlen(message);
 	//Make the output stream unbuffered for printing instantly.
 	setvbuf(stdout, NULL, _IONBF, 0);
