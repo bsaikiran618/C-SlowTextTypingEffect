@@ -1,3 +1,5 @@
+//This is cross-platform ..(cough) only windows and linux.. (cough)..
+
 #if _WIN32
 	#include <windows.h>
 #elif __linux__
@@ -10,30 +12,37 @@
 //Time in seconds.
 void waitTime(double t)
 {
-	#if __linux__
+	//This is for sleep in linux.
+	#if _WIN32
+	Sleep(t * 1000);
+	//This is for sleep in windows.
+	#else
 	struct timespec t1;
 	t1.tv_sec = (long)t;
 	t = t - (long)t;
 	t1.tv_nsec = (long)(t * 1e9);
 	nanosleep(&t1, NULL);
-	#elif _WIN32
-	Sleep(t * 1000);
 	#endif
+	//And no one cares about apple, although it should work without a problem cuz oonix.
 }
 void slowPrint(char *message, double writeInterval, int backSpace, double backSpaceInterval)
 {
 	int len = strlen(message);
+	//Make the output stream unbuffered for printing instantly.
 	setvbuf(stdout, NULL, _IONBF, 0);
+	//do the typing thing.
 	for(int i=0;i<len;i++)
 	{
 		printf("%c", message[i]);
 		waitTime(writeInterval);
 	}
+	//reset the output stream to line buffered.
 	setlinebuf(stdout);
-	//remove the input slowly (looks like we are backspace-ing)
+	
 	if(backSpace == 1)
 	{
-		printf("\r");
+		//remove the input slowly (looks like we are backspace-ing)
+		printf("\r"); //carriage return makes the cursor back to the first place in line.
 		for(int i=len;i>=0;i--)
 		{
 			fflush(stdout);
@@ -41,6 +50,7 @@ void slowPrint(char *message, double writeInterval, int backSpace, double backSp
 				printf("%c", message[j]);
 			waitTime(backSpaceInterval);
 			printf("\r");
+			//we need to clear the line, so we fill it with spaces.
 			for(int j=0;j<i;j++)
 				printf(" ");
 			printf("\r");
