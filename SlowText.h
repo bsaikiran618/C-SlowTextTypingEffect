@@ -9,6 +9,7 @@
 	#include <time.h>
 #endif
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 
 
@@ -19,12 +20,14 @@ void waitTime(double t)
 	#if _WIN32
 	Sleep(t * 1000);
 	//This is for sleep in windows.
-	#else
+	#elif __linux__
 	struct timespec t1;
 	t1.tv_sec = (long)t;
 	t = t - (long)t;
 	t1.tv_nsec = (long)(t * 1e9);
 	nanosleep(&t1, NULL);
+	#elif __APPLE__
+	usleep(t * 1000000);
 	#endif
 	//And no one cares about apple, although it should work without a problem cuz oonix.
 }
