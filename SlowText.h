@@ -1,4 +1,4 @@
-//This is cross-platform ..(cough) only windows and linux.. (cough)..
+//This works on Windows, MacOS and Linux.
 
 #ifndef SLOWTEXT
 	#define SLOWTEXT
@@ -29,7 +29,6 @@ void waitTime(double t)
 	#elif __APPLE__
 	usleep(t * 1000000);
 	#endif
-	//And no one cares about apple, although it should work without a problem cuz oonix.
 }
 
 void slowPrint(char *message, double writeInterval, int backSpace, double backSpaceInterval)
